@@ -95,6 +95,16 @@ Module Program
                     direction = "r"
                 Case ConsoleKey.Escape
                     Exit Do
+                Case Else
+                    If direction = "u" Then
+                        headY -= 1
+                    ElseIf direction = "d" Then
+                        headY += 1
+                    ElseIf direction = "l" Then
+                        headX -= 2
+                    ElseIf direction = "r" Then
+                        headX += 2
+                    End If
             End Select
             gameOver = CheckWallCollision(headX, headY, grid, direction)
 
