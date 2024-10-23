@@ -60,15 +60,7 @@ Module Program
 
             Console.SetCursorPosition(grid(0) + 3, 0)
             Console.ForegroundColor = ConsoleColor.DarkYellow
-            Console.Write($"SCORE: {score} points")
-            Console.SetCursorPosition(grid(0) + 3, 1)
-            Console.Write($"{fruitX}, {fruitY}              ")
-            Console.SetCursorPosition(grid(0) + 3, 2)
-            Try
-                Console.Write(previousHeadPositions(previousHeadPositions.Count - 1))
-            Catch ex As Exception
-
-            End Try
+            Console.Write($"SCORE: {score} point(s)")
             Console.ResetColor()
 
 
@@ -127,10 +119,7 @@ Module Program
         Loop Until gameOver = True
 
         Console.SetCursorPosition(0, grid(1) + 2)
-        Console.WriteLine($"Game Over with {score} points!")
-        For Each thing In previousHeadPositions
-            Console.WriteLine($"{thing.x}, {thing.y}")
-        Next
+        Console.WriteLine($"Game Over with {score} point(s)!")
     End Sub
 
     Sub DrawBorders(grid() As Integer)
@@ -238,8 +227,15 @@ Module Program
     Function Fruit(grid() As Integer, headX As Integer, headY As Integer)
         Dim success As Boolean = True
         Do
-            fruitX = Int(Rnd() * (grid(0) - 2)) + 1
-            fruitY = Int(Rnd() * (grid(1) - 2)) + 1
+            fruitX = Int(Rnd() * (grid(0) - 1))
+            fruitY = Int(Rnd() * (grid(1) + 1))
+
+            If fruitX = 0 Then
+                fruitX += 1
+            End If
+            If fruitY = 0 Then
+                fruitY += 1
+            End If
 
             If fruitX Mod 2 = 0 Then
                 fruitX += 1
