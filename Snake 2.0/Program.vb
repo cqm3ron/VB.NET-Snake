@@ -38,7 +38,7 @@ Module Program
         Dim direction As String = "u"
         Dim gameOver As Boolean = False
         Dim previousPosition As New HeadPos
-        Dim tailLength As Integer = 20
+        Dim tailLength As Integer = 0
         Dim fruitExists As Boolean = False
         Dim score As Integer = 0
 
