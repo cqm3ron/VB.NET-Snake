@@ -37,6 +37,8 @@ Module Program
         Dim lastKey As ConsoleKey = ConsoleKey.W
         Dim direction As String = "u"
         Dim gameOver As Boolean = False
+        Dim gameOverSelf As Boolean = False
+        Dim gameOverQuit As Boolean = False
         Dim previousPosition As New HeadPos
         Dim tailLength As Integer = 0
         Dim fruitExists As Boolean = False
@@ -86,6 +88,7 @@ Module Program
                     headX += 2
                     direction = "r"
                 Case ConsoleKey.Escape
+                    gameOverQuit = True
                     Exit Do
                 Case Else
                     If direction = "u" Then
@@ -100,13 +103,13 @@ Module Program
             End Select
             gameOver = CheckWallCollision(headX, headY, grid, direction)
 
-            If gameOver = True Then
+            If gameOver Then
                 Exit Do
             End If
 
-            gameOver = CheckSelfCollision(headX, headY, grid, direction)
+            gameOverSelf = CheckSelfCollision(headX, headY, grid, direction)
 
-            If gameOver = True Then
+            If gameOverSelf Then
                 Exit Do
             End If
 
@@ -117,8 +120,21 @@ Module Program
             previousPosition.x = Nothing
             previousPosition.y = Nothing
         Loop Until gameOver = True
+        Console.SetCursorPosition(grid(0) + 3, 0)
+        For i = 0 To score.ToString.Length + 16
+            Console.Write(" ")
+        Next
 
         Console.SetCursorPosition(0, grid(1) + 2)
+        If gameOver Then
+            Console.WriteLine("You made your snake crash into a wall! It is now in hospital with a concussion!")
+        ElseIf gameOverSelf Then
+            Console.WriteLine("You made you snake bump into itself! That looks like it hurt!")
+        ElseIf gameOverQuit Then
+            Console.WriteLine("You abandoned your snake! How rude!")
+        Else
+            Console.WriteLine("You killed your snake... but I'm not sure how... Make an issue on GitHub at 'github.com/cqm3ron/VB.NET-Snake' explaining how you got here!")
+        End If
         Console.WriteLine($"Game Over with {score} point(s)!")
     End Sub
 
